@@ -8,6 +8,10 @@ const inputClass =
   "mt-1 w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none focus:border-zinc-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100";
 const labelClass = "block text-sm font-medium text-zinc-800 dark:text-zinc-200";
 
+// Google provider 설정이 끝나기 전에는 버튼을 숨긴다.
+// 설정이 끝나면 NEXT_PUBLIC_GOOGLE_AUTH_ENABLED=true 로 켠다.
+const googleEnabled = process.env.NEXT_PUBLIC_GOOGLE_AUTH_ENABLED === "true";
+
 export default function LoginForm({ initialError }: { initialError?: string }) {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -26,7 +30,11 @@ export default function LoginForm({ initialError }: { initialError?: string }) {
     });
 
     if (signInError) {
-      setError(signInError.message);
+      setError(
+        signInError.message.includes("provider is not enabled")
+          ? "Google 로그인이 아직 설정되지 않았습니다. 이메일로 로그인해주세요."
+          : signInError.message,
+      );
       setLoading(false);
     }
   }
@@ -57,20 +65,24 @@ export default function LoginForm({ initialError }: { initialError?: string }) {
 
   return (
     <div className="flex flex-col gap-5">
-      <button
-        type="button"
-        onClick={handleGoogle}
-        disabled={loading}
-        className="rounded-full bg-zinc-900 px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-zinc-700 disabled:opacity-40 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-300"
-      >
-        Google 계정으로 로그인
-      </button>
+      {googleEnabled && (
+        <>
+          <button
+            type="button"
+            onClick={handleGoogle}
+            disabled={loading}
+            className="rounded-full bg-zinc-900 px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-zinc-700 disabled:opacity-40 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-300"
+          >
+            Google 계정으로 로그인
+          </button>
 
-      <div className="flex items-center gap-3">
-        <span className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
-        <span className="text-xs text-zinc-500 dark:text-zinc-400">또는</span>
-        <span className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
-      </div>
+          <div className="flex items-center gap-3">
+            <span className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
+            <span className="text-xs text-zinc-500 dark:text-zinc-400">또는</span>
+            <span className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
+          </div>
+        </>
+      )}
 
       <form onSubmit={handlePassword} className="flex flex-col gap-4">
         <div>
