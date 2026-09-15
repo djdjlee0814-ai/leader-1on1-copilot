@@ -34,9 +34,7 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isPublicPath = pathname.startsWith("/login") || pathname.startsWith("/auth");
 
-  // API는 리디렉트하지 않는다. fetch 응답이 로그인 HTML로 바뀌면 화면에서 처리할 수 없으므로,
-  // 각 Route Handler가 직접 401을 반환하게 둔다.
-  if (!user && !isPublicPath && !pathname.startsWith("/api")) {
+  if (!user && !isPublicPath) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
@@ -46,8 +44,10 @@ export async function proxy(request: NextRequest) {
   return supabaseResponse;
 }
 
+// API 경로는 제외한다. 각 Route Handler가 스스로 로그인 여부를 확인하고 401을 반환하며,
+// 오래 걸리는 AI 요청에까지 세션 갱신이 끼어들면 응답이 인증 쿠키를 건드려 로그아웃을 유발했다.
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
