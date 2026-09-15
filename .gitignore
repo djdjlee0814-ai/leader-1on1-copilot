@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 로컬 도구 상태와 임시 보관 폴더 (다른 PC에서는 의미가 없음)
+/.bkit/
+/.claude/
+/trash-can/
+/supabase/.temp/
