@@ -5,6 +5,7 @@ import { COPILOT_PRINCIPLES, formatConversationState } from "@/lib/prompts";
 import type { CloseSummary, ConversationState } from "@/lib/types";
 
 export const runtime = "nodejs";
+export const maxDuration = 120;
 
 const SYSTEM_PROMPT = `당신은 1:1 면담이 끝난 직후, 오간 대화를 정리해 주는 AI 코파일럿입니다.
 

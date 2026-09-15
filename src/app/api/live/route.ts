@@ -5,6 +5,7 @@ import { COPILOT_PRINCIPLES, formatConversationState } from "@/lib/prompts";
 import type { ConversationState, LiveUpdate, QuickAction } from "@/lib/types";
 
 export const runtime = "nodejs";
+export const maxDuration = 120;
 
 const SYSTEM_PROMPT = `당신은 리더가 1:1 면담을 진행하는 동안 옆에서 대화 방향을 계속 조정해 주는 AI 코파일럿입니다.
 직원의 새로운 발언이나 리더의 요청이 들어올 때마다 대화 상태를 다시 해석하고, 지금 리더가 할 가장 적절한 행동 하나와 질문 하나를 제안합니다.

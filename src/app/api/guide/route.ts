@@ -5,6 +5,8 @@ import { COPILOT_PRINCIPLES, formatMeetingContext } from "@/lib/prompts";
 import type { ConversationGuide, MeetingContext } from "@/lib/types";
 
 export const runtime = "nodejs";
+// AI가 가이드를 만드는 데 20~40초가 걸려 Vercel 기본 제한으로는 중간에 끊긴다.
+export const maxDuration = 120;
 
 const SYSTEM_PROMPT = `당신은 리더가 1:1 면담을 진행하도록 돕는 대화 가이드를 만드는 코파일럿입니다.
 리더는 이 가이드 하나만 보면서 면담을 처음부터 끝까지 진행합니다. 질문을 많이 나열하지 말고, 지금 무엇을 해야 하는지 바로 알 수 있게 만드세요.
