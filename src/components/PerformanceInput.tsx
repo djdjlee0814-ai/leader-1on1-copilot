@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { inputClass, labelClass } from "@/components/QuickStartForm";
+import { field, helper, label, selectable } from "@/lib/ui";
 import type { PerformanceGoal } from "@/lib/types";
 
 type Props = {
@@ -25,67 +25,50 @@ export default function PerformanceInput({
   const [mode, setMode] = useState<Mode>("paste");
 
   return (
-    <div className="rounded-lg border border-zinc-200 px-4 py-4 dark:border-zinc-800">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <span className={labelClass}>성과 정보 (선택)</span>
-        <div className="flex gap-1.5">
-          <button
-            type="button"
-            onClick={() => setMode("paste")}
-            className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
-              mode === "paste"
-                ? "border-zinc-900 bg-zinc-900 text-white dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900"
-                : "border-zinc-300 text-zinc-600 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-900"
-            }`}
-          >
-            자료 붙여넣기
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode("simple")}
-            className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
-              mode === "simple"
-                ? "border-zinc-900 bg-zinc-900 text-white dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900"
-                : "border-zinc-300 text-zinc-600 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-900"
-            }`}
-          >
-            간단 입력
-          </button>
+    <section>
+      <div className="flex flex-wrap items-baseline justify-between gap-3">
+        <div>
+          <p className={label}>성과 정보</p>
+          <p className={helper}>선택 입력입니다. 있는 자료를 그대로 붙여 넣어도 됩니다.</p>
+        </div>
+        <div className="flex gap-2">
+          {(["paste", "simple"] as Mode[]).map((option) => (
+            <button
+              key={option}
+              type="button"
+              onClick={() => setMode(option)}
+              className={`rounded-lg border px-3 py-1.5 text-[12.5px] transition-colors ${selectable(mode === option)}`}
+            >
+              {option === "paste" ? "자료 붙여넣기" : "간단 입력"}
+            </button>
+          ))}
         </div>
       </div>
 
       {mode === "paste" ? (
-        <div className="mt-3">
-          <textarea
-            value={notes}
-            onChange={(event) => onNotesChange(event.target.value)}
-            rows={6}
-            placeholder={`목표/KPI, 평가결과, Self-review, 평가 코멘트 등이 있다면 그대로 붙여 넣어 주세요. AI가 면담에 필요한 내용을 정리합니다.
+        <textarea
+          value={notes}
+          onChange={(event) => onNotesChange(event.target.value)}
+          rows={6}
+          placeholder={`목표/KPI, 평가결과, Self-review, 평가 코멘트 등이 있다면 그대로 붙여 넣어 주세요.
 
 예)
 채용 Lead Time 목표 35일 / 실제 52일
 핵심직무 채용 8건 중 6건 완료
-신규 채용 Branding 업무 추가
 상반기 평가 B`}
-            className={inputClass}
-          />
-        </div>
+          className={`${field} mt-4`}
+        />
       ) : (
-        <div className="mt-3 flex flex-col gap-3">
+        <div className="mt-4 flex flex-col gap-5">
           {goals.map((goal, index) => (
-            <div
-              key={index}
-              className="rounded-md border border-zinc-100 px-3 py-3 dark:border-zinc-800"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                  목표 {index + 1}
-                </span>
+            <div key={index} className="border-l border-line pl-4">
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="text-[12px] text-ink-faint">목표 {index + 1}</span>
                 {goals.length > 1 && (
                   <button
                     type="button"
                     onClick={() => onGoalsChange(goals.filter((_, i) => i !== index))}
-                    className="text-xs text-zinc-500 underline dark:text-zinc-400"
+                    className="text-[12px] text-ink-faint underline underline-offset-2 hover:text-ink-muted"
                   >
                     삭제
                   </button>
@@ -102,9 +85,9 @@ export default function PerformanceInput({
                   )
                 }
                 placeholder="목표 (예: 채용 Lead Time 단축)"
-                className={inputClass}
+                className={field}
               />
-              <div className="mt-2 grid gap-2 sm:grid-cols-2">
+              <div className="mt-2.5 grid gap-2.5 sm:grid-cols-2">
                 <input
                   type="text"
                   value={goal.target}
@@ -116,7 +99,7 @@ export default function PerformanceInput({
                     )
                   }
                   placeholder="기대수준 (예: 평균 35일)"
-                  className={inputClass}
+                  className={`${field} mt-0`}
                 />
                 <input
                   type="text"
@@ -129,7 +112,7 @@ export default function PerformanceInput({
                     )
                   }
                   placeholder="실제 성과 (예: 평균 52일)"
-                  className={inputClass}
+                  className={`${field} mt-0`}
                 />
               </div>
             </div>
@@ -137,12 +120,12 @@ export default function PerformanceInput({
           <button
             type="button"
             onClick={() => onGoalsChange([...goals, { ...EMPTY_GOAL }])}
-            className="self-start rounded-full border border-zinc-300 px-4 py-1.5 text-xs font-medium text-zinc-700 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-900"
+            className="self-start rounded-lg border border-line px-3 py-1.5 text-[12.5px] text-ink-muted transition-colors hover:border-line-strong hover:text-ink"
           >
             목표 추가
           </button>
         </div>
       )}
-    </div>
+    </section>
   );
 }

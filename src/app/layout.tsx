@@ -28,23 +28,28 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         {profile && (
-          <header className="flex items-center justify-end gap-3 border-b border-zinc-200 bg-white px-4 py-2 text-xs dark:border-zinc-800 dark:bg-zinc-950 sm:px-8">
-            <span className="text-zinc-600 dark:text-zinc-400">
-              {profile.display_name ?? profile.email}
-              {profile.role === "admin" && (
-                <span className="ml-2 rounded-full bg-zinc-900 px-2 py-0.5 text-[11px] text-white dark:bg-zinc-100 dark:text-zinc-900">
-                  관리자
+          <header className="border-b border-line bg-surface">
+            <div className="mx-auto flex w-full max-w-3xl items-center justify-between gap-4 px-6 py-3 sm:px-8">
+              <span className="text-[13px] font-medium tracking-tight text-ink">
+                Leader 1:1 Copilot
+              </span>
+              <div className="flex items-center gap-4">
+                <span className="text-[12.5px] text-ink-muted">
+                  {profile.display_name ?? profile.email}
+                  {profile.role === "admin" && (
+                    <span className="ml-2 text-[11px] text-ink-faint">관리자</span>
+                  )}
                 </span>
-              )}
-            </span>
-            <form action="/auth/signout" method="post">
-              <button
-                type="submit"
-                className="rounded-full border border-zinc-300 px-3 py-1 text-zinc-600 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-900"
-              >
-                로그아웃
-              </button>
-            </form>
+                <form action="/auth/signout" method="post">
+                  <button
+                    type="submit"
+                    className="text-[12.5px] text-ink-faint transition-colors hover:text-ink"
+                  >
+                    로그아웃
+                  </button>
+                </form>
+              </div>
+            </div>
           </header>
         )}
         {children}

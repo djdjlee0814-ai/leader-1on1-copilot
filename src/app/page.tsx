@@ -151,28 +151,32 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-1 flex-col items-center bg-zinc-50 px-4 py-10 dark:bg-black sm:px-8">
-      <main className="w-full max-w-2xl">
-        <header>
-          <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
-            Leader 1:1 Copilot
-          </h1>
-          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-            더 나은 1:1을 위한 리더의 AI 대화 파트너
-          </p>
-        </header>
-
+    <div className="flex flex-1 flex-col items-center px-6 py-12 sm:px-8">
+      <main className="w-full max-w-3xl">
         {error && (
-          <div className="mt-6 rounded-md bg-red-50 px-4 py-3 text-sm text-red-700 dark:bg-red-950 dark:text-red-300">
+          <div className="mb-8 border-l-2 border-negative bg-negative-soft px-4 py-3 text-[13px] text-negative">
             <p>{error}</p>
-            <button type="button" onClick={() => setError("")} className="mt-2 underline">
+            <button
+              type="button"
+              onClick={() => setError("")}
+              className="mt-1.5 underline underline-offset-2"
+            >
               닫기
             </button>
           </div>
         )}
 
         {phase === "quickStart" && (
-          <div className="mt-8 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
+          <div>
+            <header className="mb-10">
+              <h1 className="text-[22px] font-semibold tracking-tight text-ink">
+                면담 준비
+              </h1>
+              <p className="mt-1.5 text-[14px] leading-relaxed text-ink-muted">
+                꼭 필요한 것만 알려주시면 1~2분 안에 대화 가이드를 만들어 드립니다.
+              </p>
+            </header>
+
             <QuickStartForm
               loading={loading}
               sessions={sessions}
@@ -183,7 +187,7 @@ export default function Home() {
         )}
 
         {phase === "guide" && guide && state && (
-          <div className="mt-8 flex flex-col gap-5">
+          <div className="flex flex-col gap-14">
             <ConversationGuideView
               guide={guide}
               context={state.meetingContext}
@@ -201,7 +205,7 @@ export default function Home() {
         )}
 
         {phase === "live" && state && (
-          <div className="mt-8">
+          <div>
             <LiveSession
               state={state}
               onStateChange={setState}

@@ -1,26 +1,104 @@
 @import "tailwindcss";
 
+/*
+  Leader 1:1 Copilot 디자인 토큰
+  - 차분한 warm neutral 위에, 강조색은 잉크 블루 하나만 절제해서 쓴다.
+  - 강조색은 기본 동작 / 선택 상태 / 핵심 질문 세 곳에만 쓴다.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --ground: #fbfaf9; /* 화면 바탕 */
+  --surface: #ffffff; /* 콘텐츠 면 */
+  --raised: #f6f5f3; /* 살짝 눌린 면 */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --ink: #1c1a17; /* 본문 */
+  --ink-muted: #5f5a54; /* 보조 설명 */
+  --ink-faint: #938d86; /* 라벨, 메타 */
+
+  --line: #e8e5e1; /* 기본 헤어라인 */
+  --line-strong: #d6d1cb;
+
+  --accent: #2c4a6e; /* 잉크 블루 */
+  --accent-hover: #243c5a;
+  --accent-soft: #eef2f7; /* 선택 상태 배경 */
+  --accent-line: #b9c6d6;
+
+  --caution: #8a6a2f; /* 주의 (내려놓을 판단) */
+  --caution-soft: #fbf6ec;
+  --positive: #3f6350; /* 권장 표현 */
+  --positive-soft: #eef3f0;
+  --negative: #8c4a45; /* 피해야 할 표현 */
+  --negative-soft: #faf0ef;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --ground: #131211;
+    --surface: #1a1918;
+    --raised: #211f1e;
+
+    --ink: #edeae6;
+    --ink-muted: #a8a29b;
+    --ink-faint: #7c7770;
+
+    --line: #2b2927;
+    --line-strong: #3a3735;
+
+    --accent: #9db8d6;
+    --accent-hover: #b4c9e0;
+    --accent-soft: #1d2732;
+    --accent-line: #3c4d61;
+
+    --caution: #d2ab6b;
+    --caution-soft: #221d14;
+    --positive: #8fb5a0;
+    --positive-soft: #16201a;
+    --negative: #d19b96;
+    --negative-soft: #241716;
   }
 }
 
+@theme inline {
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-line: var(--accent-line);
+  --color-caution: var(--caution);
+  --color-caution-soft: var(--caution-soft);
+  --color-positive: var(--positive);
+  --color-positive-soft: var(--positive-soft);
+  --color-negative: var(--negative);
+  --color-negative-soft: var(--negative-soft);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 작은 라벨: 정보 위계의 가장 아래 단계 */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* 포커스는 테두리 대신 얇은 링 하나로만 */
+.field:focus {
+  outline: none;
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }

@@ -3,10 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { createClient } from "@/lib/supabase/client";
-
-const inputClass =
-  "mt-1 w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none focus:border-zinc-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100";
-const labelClass = "block text-sm font-medium text-zinc-800 dark:text-zinc-200";
+import { btnPrimary, btnSecondary, field, label } from "@/lib/ui";
 
 // Google provider 설정이 끝나기 전에는 버튼을 숨긴다.
 // 설정이 끝나면 NEXT_PUBLIC_GOOGLE_AUTH_ENABLED=true 로 켠다.
@@ -58,64 +55,63 @@ export default function LoginForm({ initialError }: { initialError?: string }) {
       return;
     }
 
-    // 서버 컴포넌트가 새 세션 쿠키를 다시 읽도록 refresh까지 호출한다.
     router.push("/");
     router.refresh();
   }
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-6">
       {googleEnabled && (
         <>
           <button
             type="button"
             onClick={handleGoogle}
             disabled={loading}
-            className="rounded-full bg-zinc-900 px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-zinc-700 disabled:opacity-40 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-300"
+            className={btnSecondary}
           >
             Google 계정으로 로그인
           </button>
 
-          <div className="flex items-center gap-3">
-            <span className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
-            <span className="text-xs text-zinc-500 dark:text-zinc-400">또는</span>
-            <span className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
+          <div className="flex items-center gap-4">
+            <span className="h-px flex-1 bg-line" />
+            <span className="text-[12px] text-ink-faint">또는</span>
+            <span className="h-px flex-1 bg-line" />
           </div>
         </>
       )}
 
-      <form onSubmit={handlePassword} className="flex flex-col gap-4">
+      <form onSubmit={handlePassword} className="flex flex-col gap-5">
         <div>
-          <label className={labelClass}>이메일</label>
+          <label className={label}>이메일</label>
           <input
             type="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             autoComplete="username"
-            className={inputClass}
+            className={field}
           />
         </div>
         <div>
-          <label className={labelClass}>비밀번호</label>
+          <label className={label}>비밀번호</label>
           <input
             type="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             autoComplete="current-password"
-            className={inputClass}
+            className={field}
           />
         </div>
         <button
           type="submit"
           disabled={loading || !email.trim() || !password}
-          className="rounded-full border border-zinc-300 px-5 py-3 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 disabled:opacity-40 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-900"
+          className={`mt-1 ${btnPrimary}`}
         >
-          {loading ? "로그인 중..." : "이메일로 로그인"}
+          {loading ? "로그인 중..." : "로그인"}
         </button>
       </form>
 
       {error && (
-        <p className="rounded-md bg-red-50 px-4 py-3 text-sm text-red-700 dark:bg-red-950 dark:text-red-300">
+        <p className="border-l-2 border-negative bg-negative-soft px-4 py-3 text-[13px] leading-relaxed text-negative">
           {error}
         </p>
       )}

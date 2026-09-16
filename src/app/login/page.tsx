@@ -13,20 +13,20 @@ export default async function LoginPage({
   const { error } = await searchParams;
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-zinc-50 px-4 py-12 dark:bg-black">
-      <main className="w-full max-w-sm">
-        <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+    <div className="flex flex-1 items-center justify-center px-6 py-16">
+      <main className="w-full max-w-[360px]">
+        <h1 className="text-[22px] font-semibold tracking-tight text-ink">
           Leader 1:1 Copilot
         </h1>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-2 text-[14px] leading-relaxed text-ink-muted">
           더 나은 1:1을 위한 리더의 AI 대화 파트너
         </p>
 
-        <div className="mt-8 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
+        <div className="mt-10">
           <LoginForm initialError={error ? ERROR_MESSAGES[error] : undefined} />
         </div>
 
-        <p className="mt-4 text-xs text-zinc-500 dark:text-zinc-400">
+        <p className="mt-8 text-[12.5px] text-ink-faint">
           초대된 사내 구성원만 이용할 수 있습니다.
         </p>
       </main>
