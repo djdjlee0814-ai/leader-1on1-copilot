@@ -199,5 +199,5 @@ revoke execute on function public.hook_restrict_signup_to_allowlist from authent
 -- 7. 최초 관리자 등록 (이메일을 본인 것으로 바꿔서 실행)
 -- ────────────────────────────────────────────────
 -- insert into public.allowed_leaders (email, role, note)
--- values ('djlee@jeisys.com', 'admin', '최초 관리자')
+-- values ('your-email@example.com', 'admin', '최초 관리자')
 -- on conflict (email) do update set role = 'admin';
