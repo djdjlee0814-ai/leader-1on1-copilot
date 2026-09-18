@@ -47,5 +47,5 @@ next-env.d.ts
 /supabase/.temp/
 
 # 내부 문서 (공개 저장소에서 제외)
-/PRD.md
 /CLAUDE.md
+/발표자료/
